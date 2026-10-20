@@ -1,6 +1,15 @@
 # from typing import TypedDict
+import random
+from langchain_core.runnables import history
 from langgraph.graph import  MessagesState
 from langchain_core.messages import AIMessage
+from langchain_openrouter import ChatOpenRouter
+
+
+model = ChatOpenRouter(
+    model="openrouter/free",
+    temperature=1,
+)
 
 class State(MessagesState):
     customer_name: str
@@ -13,14 +22,19 @@ customer_name = state.get("customer_name",None)
 print(customer_name) """
 
 def node_1(state: State):
-    history = state.get("messages",[])
+    #history = state.get("messages",[])
+    new_state:State={}
     if state.get("customer_name",None) is None:
-        return {"customer_name" : "John Doe"}
+        new_state
+        new_state["customer_name"]="Oscar Diaz prueba"
     else:
-        ai_message = AIMessage(content="Hola, como estas?")
-        return {
-            "messages" : [ai_message]
-        }
+        new_state["my_age"]=random.randint(20,30)
+    
+    history =state["messages"]
+    ai_messages = model.invoke(history)
+    new_state["messages"] = [ai_messages]
+    print(new_state)
+    return new_state
 
 from langgraph.graph import END, START, StateGraph
     
