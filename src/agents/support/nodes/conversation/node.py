@@ -18,5 +18,5 @@ def conversation(state:State):
         ("system",SYSTEM_PROMPT_CONVERSATION),
         ("user",last_message.text)
     ])
-    new_state["message"] = [ai_message]
+    new_state["messages"] = [ai_message]
     return new_state

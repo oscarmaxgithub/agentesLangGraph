@@ -1,8 +1,9 @@
 
+from typing import NotRequired
 from langgraph.graph import MessagesState
 
 
 class State(MessagesState):
-    customer_name: str
-    phone: str
-    my_age: str
+    customer_name: NotRequired[str]
+    phone: NotRequired[str]
+    my_age: NotRequired[str]
