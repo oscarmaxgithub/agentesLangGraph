@@ -1,4 +1,5 @@
 from langchain.chat_models import init_chat_model
+from langchain_core.messages import AIMessage
 
 from src.agents.support.nodes.conversation.prompt import SYSTEM_PROMPT_CONVERSATION
 from src.agents.support.nodes.conversation.tools import tools
@@ -18,5 +19,6 @@ def conversation(state:State):
         ("system",SYSTEM_PROMPT_CONVERSATION),
         ("user",last_message.text)
     ])
+    ai_message = AIMessage(content=ai_message.text)
     new_state["messages"] = [ai_message]
     return new_state
